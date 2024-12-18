@@ -1,0 +1,35 @@
+chapter Local
+
+session "Factored-MDPs-Deps" in deps = "HOL-Probability" +
+  options [document = false, document_output = "output"]
+  sessions
+    Show 
+    LP_Duality
+    Linear_Programming
+    Collections
+  theories
+    LP_Duality.LP_Duality
+    "Linear_Programming.Linear_Programming"
+    "Collections.Collections"
+    "Collections.Code_Target_ICF"
+    "HOL-Data_Structures.RBT_Map"
+
+session "Explicit-MDPs" in "../lib/isabelle-mdp/src/isabelle" = "Factored-MDPs-Deps" +
+  options [document = false, document_output = "output"]
+  directories "rewards"
+  theories
+     "rewards/MDP_reward"
+
+session "Factored-MDPs" = "Explicit-MDPs" +
+  options [document = false, document_output = "output"]
+  directories 
+    "code"
+    "code/lp_cert"
+    "code/lp_cert/rbt"
+    "code/collections"
+    "algorithm"
+  theories
+    "code/Code_Export"
+  document_files
+    "root.tex"
+  export_files (in "code_export") [2] "*:**.scala"
